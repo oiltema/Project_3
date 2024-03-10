@@ -1,0 +1,25 @@
+Задачи:
++++ User +++
+Заполнить профиль+
+Создать форму профиля и добавить на страницу +
+Добавить редактирование профиля +
+
+Изменение изображения размер +
+смена пароля +
+
+отправка на почту +
++ добавить страницу с сообщением об отправке на почту register_send_mail
++ добавить страницу с сообщением о подтверждении почты и переброску на логин register_success
++ в модель добавит 2 новые записи
+date_created = models.DateTimeField(auto_now_add=True)
+auth_token = models.CharField(max_length=100)
+is_verified = models.BooleanField(default=False)
+
++ добавить при создании профиля запись
+Profile.objects.create(user=user, token=str(uuid.uuid4)
+
+
+Изменение фотографии +
+
+Add celery
+tasks ->

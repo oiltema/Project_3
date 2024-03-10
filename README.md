@@ -19,8 +19,11 @@
 
 ### Task for Dima
 
-1. User
+Добавить базовый шаблон
+
+1. User +
 2. Celery\Redis
+2.1 Send confirm registration email +
 3. Курс валют
 4. Погода
 5. 

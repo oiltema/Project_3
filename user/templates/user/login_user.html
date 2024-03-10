@@ -1,0 +1,28 @@
+{% extends 'system/base.html' %}
+
+{% block title %} {% endblock title %}
+
+{% block content %}
+
+<div style="text-align:center; margin:30px">
+    {% if messages %}
+    <div style="color:red; margin:30px">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+            <p style="margin-right:85px">Имя пользователя: {{ form.username }}</p>
+            <p>Пароль: {{ form.password }}</p>
+        <button type="submit" class="btn btn-warning">Войти</button>
+    </form>
+</div>
+
+<div style="text-align:center; margin:30px">
+    <h5>Если не зарегистрированы</h5>
+    <button type="button" class="btn btn-warning" onclick="location.href='{% url 'user:register' %}'">Регистрация</button>
+</div>
+
+{% endblock content %}

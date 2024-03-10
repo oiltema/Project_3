@@ -1,0 +1,36 @@
+{% extends 'system/base.html' %}
+
+{% block title %} {% endblock title %}
+
+{% block content %}
+
+
+
+<div style="text-align:left; margin:30px">
+    <h2>Профиль</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div style="margin-left:750px">
+            <p>Имя пользователя: {{ user_form.username }}</p>
+            <p>Электронная почта: {{ user_form.email }}</p>
+            <p>Имя: {{ profile_form.first_name }}</p>
+            <p>Фамилия: {{ profile_form.last_name }}</p>
+            <p>Город: {{ profile_form.city }}</p>
+            <p>Адрес: {{ profile_form.address }}</p>
+            <p>Номер телефона: {{ profile_form.phone }}</p>
+
+        </div>
+        <div style="position:absolute; margin-top:-300px; margin-left:200px">
+            <img src="{{ profile.image.url }}">
+            <p style="margin-top:10px">Аватар: {{ profile_form.image }}</p>
+        </div>
+        <div style="margin-top:120px">
+            <button style="margin-left:250px" type="submit" class="btn btn-warning">Редактировать</button>
+            <button style="margin-left:700px" type="button" class="btn btn-warning" onclick="location.href='{% url 'user:change_password' request.user.pk %}'">Сменить пароль</button>
+        </div>
+    </form>
+
+</div>
+
+
+{% endblock content %}

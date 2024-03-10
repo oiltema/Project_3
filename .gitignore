@@ -2,5 +2,6 @@ env
 venv
 .idea
 db.sqlite3
+my_email_settings.py
 
 **/__pycache__/

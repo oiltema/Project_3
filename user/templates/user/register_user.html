@@ -1,0 +1,19 @@
+{% extends 'system/base.html' %}
+
+{% block title %} {% endblock title %}
+
+{% block content %}
+
+<div style="text-align:center; margin:30px">
+    <form method="POST">
+        {% csrf_token %}
+        <p style="margin-right:85px">Имя пользователя: {{ form.username }}</p>
+        <p style="margin-right:85px">Электронная почта: {{ form.email }}</p>
+        <p>Пароль: {{ form.password }}</p>
+        <p style="margin-right:85px">Повторите пароль: {{ form.password2 }}</p>
+        <button type="submit" class="btn btn-warning">Зарегистрироваться</button>
+    </form>
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,12 @@
+{% extends 'system/base.html' %}
+
+{% block title %} {% endblock title %}
+
+{% block content %}
+
+<div style="text-align:center; margin:30px">
+    <h4>{{ profile.user.username }}, регистрация завершена.</h4>
+    <h5>Для авторизации: <button type="button" class="btn btn-warning" onclick="location.href='{% url 'user:login' %}'">Вход</button></h5>
+</div>
+
+{% endblock content %}
