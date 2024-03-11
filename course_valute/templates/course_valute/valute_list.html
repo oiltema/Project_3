@@ -1,0 +1,59 @@
+{% extends 'system/base.html' %}
+
+{% block content %}
+
+<div style="margin:30px; margin-left:30%">
+    <div>
+        <h3 style="margin-left:140px">Конвертер валют</h3>
+        <form method="post" style="margin-top:20px">
+            {% csrf_token %}
+            <input type="text" value="1" name="input_number">
+            <select name="select_in" style="margin-left:10px">
+                {% for i in valute %}
+                <option name="code">{{ i.country_code}}</option>
+                {% endfor %}
+            </select>
+            <a style="margin-left:10px"> = </a>
+            <select name="select_to" style="margin-left:10px">
+                {% for i in valute %}
+                <option name="code">{{ i.country_code}}</option>
+                {% endfor %}
+            </select>
+            <input style="margin-left:20px" type="submit" value="Конвертировать">
+        </form>
+        <div style="margin-left:140px">
+        {% if result %}
+            <h4 style="margin-top:20px;">Результат: {{ result.number }} {{ result.code_in }} = {{ result.result }} {{ result.code_to }}</h4>
+        {% endif %}
+        </div>
+    </div>
+    <div style="margin-top:40px">
+        <h3 style="margin-left:50px">Курс валют на {{ today }}</h3>
+        <table style="text-align:center">
+            <colgroup>
+                <col span="2" style="background:Khaki">
+                <col span="1" style="background:LightCyan">
+            </colgroup>
+            <thead>
+                <tr style="border:1px solid grey; ">
+                    <th style="border:1px solid grey; background: #BCEBDD; padding: 10px 20px"><h5>Страна</h5></th>
+                    <th style="border:1px solid grey; background: #BCEBDD; padding: 10px 20px"><h5>Код</h5></th>
+                    <th style="border:1px solid grey; background: #BCEBDD; padding: 10px 20px"><h5>Курс ЦБ</h5></th>
+                </tr>
+            </thead>
+            {% for item in valute %}
+            <tfoot>
+                <tr style="border:1px solid grey">
+                    <th style="border:1px solid grey">{{ item.country }}</th>
+                    <th style="border:1px solid grey">{{ item.country_code }}</th>
+                    <th style="border:1px solid grey">{{ item.value }} руб</th>
+                </tr>
+            </tfoot>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+
+
+{% endblock content %}
