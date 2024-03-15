@@ -1,0 +1,74 @@
+{% extends 'food_site/food_base.html' %}
+
+{% block food-content %}
+
+
+<div style="margin: 10px">
+    {% if food.image %}
+        <img src="{{ food.image.url }}">
+    {% endif %}
+    <div style="position:absolute; margin-left:350px; margin-top: -170px">
+        <p>Автор: {{ food.author }}</p>
+        {% if food.time_cook == 0 %}
+            <p>Время готовки: Не указано</p>
+        {% else %}
+            <p>Время готовки: {{ food.time_cook }}</p>
+        {% endif %}
+        <p>Порций: {{ food.portion }}</p>
+    </div>
+    <h5><a>{{ food.title }}</a></h5><hr>
+    <p>{{ food.description }}</p><hr>
+    <h5>Продукты:</h5>
+    <p>{{ food.products | linebreaks }}</p>
+</div>
+
+<div style="margin:10px; background:#a3cff7">
+    <h3>Комментарии:</h3>
+    <hr>
+
+    <div>
+        <h5>Оставить комментарий:</h5>
+        <form method="post">
+            {% csrf_token %}
+            <table>
+                {{ comments_form.as_table }}
+            </table>
+            <input type="submit" value="Добавить" style="margin:5px">
+        </form>
+        <hr>
+    </div>
+
+    {% for comment in comments %}
+    <div style="margin:10px">
+        <p> <img src="{{ comment.author.profile.image.url }}" width="5%">
+            {{ comment.author }} | {{ comment.date_created }}</p>
+        <p style="margin-left:10px">{{ comment.text | linebreaks }}</p>
+    </div>
+
+    <div style="margin:10px">
+        {% if request.user.username == comment.author.username %}
+        <button onclick="location.href='{% url 'food:comment_delete' comment.pk %}'">Удалить</button>
+        {% endif %}
+    </div>
+
+    <hr>
+    {% endfor %}
+</div>
+
+{% endblock food-content %}
+
+
+{% block food-right-content %}
+<div style="margin:10px">
+    <h4>Похожие рецепты:</h4>
+    <ul>
+    {% for food in similar_foods %}
+
+        <li><a style="text-decoration:None" href="{% url 'food:food_detail' food.slug %}">{{ food.title }}</a></li>
+
+    {% endfor %}
+    </ul>
+</div>
+
+
+{% endblock food-right-content %}

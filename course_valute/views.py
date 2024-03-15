@@ -4,14 +4,17 @@ from django.shortcuts import render
 
 from .models import Valute
 from .parsing import parsing_course
-
+from .tasks import update_or_create_valute_list
 
 
 def valute_list(request):
-    start = datetime.datetime.now()
-    parsing_course(time=4)
     valute = Valute.objects.all()
     result_html = None
+    print(f'Дата обновления: {valute.first().date_update.day}')
+    if datetime.date.today().day - valute.first().date_update.day != 0:
+        valute.delete()
+        print('start worker')
+        update_or_create_valute_list.delay()
     if request.method == 'POST':
         number = request.POST['input_number']
         code_in = Valute.objects.get(country_code=request.POST['select_in'])
@@ -24,6 +27,4 @@ def valute_list(request):
         'today': datetime.date.today(),
         'result': result_html
     }
-    stop = datetime.datetime.now()
-    print(stop - start)
     return render(request, 'course_valute/valute_list.html', context)

@@ -8,7 +8,7 @@ from .models import Profile
 
 @shared_task()
 def send_email_confirm_registration(profile_pk):
-    sleep(20)
+    sleep(10)
     profile = Profile.objects.get(pk=profile_pk)
     subject = f'Подтверждение почты для {profile.user.username}'
     message = f'Для завершения регистрации перейдите по http://127.0.0.1:8000/user/register_success/{profile.auth_token}'

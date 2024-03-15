@@ -1,0 +1,35 @@
+.content
+{
+    width: 100%;
+    margin: 0 auto;
+}
+.left
+{
+    width: 20%;
+    float: left;
+    background: #c6e5f7;
+}
+.middle
+{
+    width: 55%;
+    background: #c6f7f7;
+    display:inline-block;
+}
+.right
+{
+    width: 25%;
+    float: right;
+    background: #c6f7e3;
+    display:inline-block;
+}
+
+.food {
+    margin: 30px;
+
+}
+.item-food {
+    position: absolute;
+    margin-left: 300px;
+    margin-top: -170px;
+    width: 30%;
+}

@@ -19,7 +19,7 @@ def login_user(request):
         print(user.profile.is_verified)
         if user is not None and user.profile.is_verified == True:
             login(request, user)
-            return redirect('user:login')
+            return redirect('homepage')
         else:
             messages.error(request, 'Подтвердите электронную почту')
     form = LoginForm()

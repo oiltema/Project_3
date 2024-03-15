@@ -1,0 +1,52 @@
+{% extends 'system/base.html' %}
+
+{% block title %}Рецепты{% endblock title %}
+
+
+
+{% block content %}
+
+<div class="content food">
+    <div class="left">
+        <h5 style="margin:10px">Рецепты по типам:</h5>
+        <hr>
+        <div style="margin-left:10px">
+            <p>Основные:</p>
+            {% for tag in tags_main %}
+                <a href="{% url 'food:food_list_by_tag' tag.pk %}" style="text-decoration:None" name="food_tag">{{ tag }}, </a>
+            {% endfor %}
+            <hr>
+            <p>Типы:</p>
+            {% for tag in tags_all %}
+                <a href="{% url 'food:food_list_by_tag' tag.pk %}" style="text-decoration:None" name="food_tag">{{ tag }}, </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="middle">
+        <h5 style="margin:10px">Рецепты:
+            <div style="float:right;">
+                <form method="post">
+                    {% csrf_token %}
+                    <select name="sort">
+                        <option value="-date_created">По дате</option>
+                        <option value="title">По названию</option>
+                    </select>
+                    <input type="submit" value="Сортировать">
+                </form>
+            </div>
+        </h5>
+        <br>
+        {% block food-content %}
+
+        {% endblock food-content %}
+    </div>
+
+    <div class="right">
+        {% block food-right-content %}
+
+        <h4 style="margin:10px">Популярные рецепты:</h4>
+        {% endblock food-right-content %}
+    </div>
+</div>
+{% endblock content %}

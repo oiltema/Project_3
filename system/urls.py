@@ -14,7 +14,8 @@ urlpatterns = [
     path('', homepage, name='homepage'),
     path('admin/', admin.site.urls),
     path('user/', include('user.urls')),
-    path('course/', include('course_valute.urls'))
+    path('course/', include('course_valute.urls')),
+    path('food/', include('food_site.urls'))
 ]
 
 if settings.DEBUG:

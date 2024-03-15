@@ -30,6 +30,9 @@ INSTALLED_APPS = [
 
     'user',
     'course_valute',
+    'food_site',
+
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +61,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'food_site.context_processors.get_all_foods',
+                'food_site.context_processors.get_all_tags',
             ],
         },
     },
@@ -135,4 +140,5 @@ EMAIL_USE_TLS = email_settings.EMAIL_USE_TLS
 
 CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
+
 

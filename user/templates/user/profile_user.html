@@ -25,7 +25,7 @@
             <p style="margin-top:10px">Аватар: {{ profile_form.image }}</p>
         </div>
         <div style="margin-top:120px">
-            <button style="margin-left:250px" type="submit" class="btn btn-warning">Редактировать</button>
+            <button style="margin-left:250px" type="submit" class="btn btn-warning">Сохранить</button>
             <button style="margin-left:700px" type="button" class="btn btn-warning" onclick="location.href='{% url 'user:change_password' request.user.pk %}'">Сменить пароль</button>
         </div>
     </form>

@@ -1,0 +1,35 @@
+{% extends 'food_site/food_base.html' %}
+
+{% block food-content %}
+
+{% if foods_sort %}
+    {% for item in foods_sort %}
+        <div class="food">
+            {% if item.image %}
+                <img src="{{ item.image.url }}" width="32%">
+            {% endif %}
+        <div class="item-food">
+            <p><a href="{% url 'food:food_detail' item.slug %}">{{ item.title }}</a></p>
+            <p>{{ item.description }}</p>
+            <p>Комментариев: {{ item.comments.count }}</p>
+        </div>
+        </div>
+    <hr>
+    {% endfor %}
+{% else %}
+    {% for item in foods_all %}
+        <div class="food">
+            {% if item.image %}
+                <img src="{{ item.image.url }}" width="32%" onclick="location.href='{% url 'food:food_detail' item.slug %}'">
+            {% endif %}
+        <div class="item-food">
+            <p><a href="{% url 'food:food_detail' item.slug %}">{{ item.title }}</a></p>
+            <p>{{ item.description | safe|truncatechars:170 }}</p>
+            <p style="float:right">Комментариев: {{ item.comments.count }}</p>
+        </div>
+        </div>
+    <hr>
+    {% endfor %}
+{% endif %}
+
+{% endblock food-content %}
