@@ -8,6 +8,7 @@
         <img src="{{ food.image.url }}">
     {% endif %}
     <div style="position:absolute; margin-left:350px; margin-top: -170px">
+        <p>Категория: {{ food.category }}</p>
         <p>Автор: {{ food.author }}</p>
         {% if food.time_cook == 0 %}
             <p>Время готовки: Не указано</p>
@@ -16,10 +17,35 @@
         {% endif %}
         <p>Порций: {{ food.portion }}</p>
     </div>
-    <h5><a>{{ food.title }}</a></h5><hr>
+    <h5 style="margin:10px"><a>{{ food.title }}</a></h5><hr>
     <p>{{ food.description }}</p><hr>
     <h5>Продукты:</h5>
     <p>{{ food.products | linebreaks }}</p>
+    <div style="margin:20px;">
+        {% if steps %}
+            <div>
+            {% for step in steps %}
+                <img src="{{ step.image.url }}" width="25%">
+                <div style="margin-left: 30px; width:60%; display: inline-flex;">
+                    <a>{{ step.text }}</a>
+                </div>
+                <hr>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    {% if request.user.username == food.author.username %}
+        <div style="float:right; margin:15px">
+            <button type="submit" onclick="location.href='{% url 'food:food_edit' food.pk %}'">Редактировать</button>
+            <button type="submit" onclick="location.href='{% url 'food:food_delete' food.pk %}'">Удалить</button>
+        </div>
+    {% endif %}
+</div>
+
+<div style="margin-left: 500px;">
+    Понравилось:
+    <img src="/media/img/like.png" width="6%" onclick="location.href='{% url 'food:add_like' food.pk %}'">
+    {{ food.likes.count }}
 </div>
 
 <div style="margin:10px; background:#a3cff7">
@@ -44,31 +70,16 @@
             {{ comment.author }} | {{ comment.date_created }}</p>
         <p style="margin-left:10px">{{ comment.text | linebreaks }}</p>
     </div>
-
     <div style="margin:10px">
         {% if request.user.username == comment.author.username %}
         <button onclick="location.href='{% url 'food:comment_delete' comment.pk %}'">Удалить</button>
         {% endif %}
     </div>
-
     <hr>
     {% endfor %}
 </div>
 
+
 {% endblock food-content %}
 
 
-{% block food-right-content %}
-<div style="margin:10px">
-    <h4>Похожие рецепты:</h4>
-    <ul>
-    {% for food in similar_foods %}
-
-        <li><a style="text-decoration:None" href="{% url 'food:food_detail' food.slug %}">{{ food.title }}</a></li>
-
-    {% endfor %}
-    </ul>
-</div>
-
-
-{% endblock food-right-content %}

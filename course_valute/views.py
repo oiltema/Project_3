@@ -10,11 +10,10 @@ from .tasks import update_or_create_valute_list
 def valute_list(request):
     valute = Valute.objects.all()
     result_html = None
-    print(f'Дата обновления: {valute.first().date_update.day}')
-    if datetime.date.today().day - valute.first().date_update.day != 0:
-        valute.delete()
-        print('start worker')
-        update_or_create_valute_list.delay()
+    # if datetime.date.today().day - valute.first().date_update.day != 0:
+    #     valute.delete()
+    #     print('start worker')
+    update_or_create_valute_list.delay()
     if request.method == 'POST':
         number = request.POST['input_number']
         code_in = Valute.objects.get(country_code=request.POST['select_in'])

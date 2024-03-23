@@ -1,0 +1,29 @@
+{% extends 'food_site/food_base.html' %}
+
+{% block food-content %}
+<h4 style="margin-left:30px">Поиск: "{{ search_item }}":</h4>
+<br>
+
+
+{% for item in foods %}
+    <div class="food">
+        {% if item.image %}
+            <img src="{{ item.image.url }}" width="32%" onclick="location.href='{% url 'food:food_detail' item.slug %}'">
+        {% endif %}
+    <div class="item-food">
+        <p><a href="{% url 'food:food_detail' item.slug %}">{{ item.title }}</a></p>
+        <p>{{ item.description | safe|truncatechars:170 }}</p>
+        <p style="float:right">Просмотров: {{ item.views }} | Комментариев: {{ item.comments.count }} | Понравилось: {{ item.likes.count }}</p>
+    </div>
+    </div>
+<hr>
+{% endfor %}
+
+<div style="margin-top: 30px; margin-left: 150px; margin-bottom:20px">
+    {% for page_number in foods.paginator.page_range %}
+        <a href="?page={{ p }}" style="text-decoration:None">{{ page_number }}</a>
+    {% endfor %}
+</div>
+
+
+{% endblock food-content %}

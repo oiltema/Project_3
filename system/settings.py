@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'course_valute',
     'food_site',
 
-    'taggit',
+
 ]
 
 MIDDLEWARE = [
@@ -61,8 +61,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'food_site.context_processors.get_all_foods',
-                'food_site.context_processors.get_all_tags',
+                'food_site.context_processors.get_popular_foods',
+                'food_site.context_processors.get_all_category',
             ],
         },
     },

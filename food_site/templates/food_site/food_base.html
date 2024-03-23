@@ -11,30 +11,21 @@
         <h5 style="margin:10px">Рецепты по типам:</h5>
         <hr>
         <div style="margin-left:10px">
-            <p>Основные:</p>
-            {% for tag in tags_main %}
-                <a href="{% url 'food:food_list_by_tag' tag.pk %}" style="text-decoration:None" name="food_tag">{{ tag }}, </a>
-            {% endfor %}
+            {% for cat in category %}
+                <p><a href="{% url 'food:food_list_by_category' cat.slug %}">{{ cat.title }}</a></p>
+                {% for sub in subcategory %}
+                    {% if cat.title == sub.category.title %}
+                        <a href="{% url 'food:food_list_by_category' sub.slug %}">{{ sub.title }}</a>
+                    {% endif %}
+                {% endfor %}
             <hr>
-            <p>Типы:</p>
-            {% for tag in tags_all %}
-                <a href="{% url 'food:food_list_by_tag' tag.pk %}" style="text-decoration:None" name="food_tag">{{ tag }}, </a>
             {% endfor %}
         </div>
     </div>
 
     <div class="middle">
         <h5 style="margin:10px">Рецепты:
-            <div style="float:right;">
-                <form method="post">
-                    {% csrf_token %}
-                    <select name="sort">
-                        <option value="-date_created">По дате</option>
-                        <option value="title">По названию</option>
-                    </select>
-                    <input type="submit" value="Сортировать">
-                </form>
-            </div>
+
         </h5>
         <br>
         {% block food-content %}
@@ -45,7 +36,30 @@
     <div class="right">
         {% block food-right-content %}
 
+        <div style="margin:10px">
+            <button type="button" onclick="location.href='{% url 'food:food_create' %}'">Добавить рецепт</button>
+        </div>
+
+        <div style="margin:10px">
+            <h4>Поиск:</h4>
+            <form method="post" action="{% url 'food:search' %}">
+                {% csrf_token %}
+                <input type="search" name="search">
+                <button type="submit">Найти</button>
+            </form>
+        </div>
+
         <h4 style="margin:10px">Популярные рецепты:</h4>
+        <ul>
+            {% for food in food_popular %}
+                <li style="margin:3px">
+                    <img src="{{ food.image.url }}" width="30%" onclick="location.href='{{ food.get_absolute_url }}'">
+                    <a style="text-decoration:None" href="{{ food.get_absolute_url }}">{{ food.title | safe|truncatechars:20 }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+
         {% endblock food-right-content %}
     </div>
 </div>

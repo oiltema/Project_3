@@ -1,0 +1,39 @@
+{% extends 'food_site/food_base.html' %}
+
+{% block food-content %}
+
+<div style="margin:30px">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {{ food_form.as_table }}
+        </table>
+        <input type="submit" value="Редактировать">
+    </form>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div style="margin:20px;">
+            <h5>Добавить шаг.</h5>
+            <a>{{ step_form.image }}</a>
+            <p style="margin-top:10px">{{ step_form.text }}</p>
+            <input type="submit" value="Добавить шаг">
+            <hr>
+        </div>
+
+    </form>
+    <div style="margin:20px;">
+        {% if steps %}
+            <div>
+            {% for step in steps %}
+                <img src="{{ step.image.url }}" width="25%">
+                <div style="margin-left: 30px; width:60%; display: inline-flex;">
+                    <a>{{ step.text }}</a>
+                </div>
+                <hr>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock food-content %}

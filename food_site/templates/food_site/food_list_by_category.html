@@ -1,6 +1,7 @@
 {% extends 'food_site/food_base.html' %}
 
 {% block food-content %}
+
 <div style="float:right; margin-top:-50px">
     {% if not search_item %}
     <form method="post">
@@ -16,16 +17,20 @@
 </div>
 
 
-{% for food in foods %}
+<h4 style="margin-left:30px">Рецепты "{{ category_name }}":</h4>
+<br>
+
+
+{% for item in foods %}
     <div class="food">
-        {% if food.image %}
-            <img src="{{ food.image.url }}" width="32%" onclick="location.href='{{ food.get_absolute_url }}'">
+        {% if item.image %}
+            <img src="{{ item.image.url }}" width="32%" onclick="location.href='{{ item.get_absolute_url }}'">
         {% endif %}
-        <div class="item-food">
-            <p><a href="{{ food.get_absolute_url }}">{{ food.title }}</a></p>
-            <p>{{ food.description | safe|truncatechars:170 }}</p>
-            <p style="float:right">Просмотров: {{ food.views }} | Комментариев: {{ food.comments.count }} | Понравилось: {{ food.likes.count }}</p>
-        </div>
+    <div class="item-food">
+        <p><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></p>
+        <p>{{ item.description | safe|truncatechars:170 }}</p>
+        <p style="float:right">Просмотров: {{ item.views }} | Комментариев: {{ item.comments.count }} | Понравилось: {{ item.likes.count }}</p>
+    </div>
     </div>
 <hr>
 {% endfor %}
@@ -35,5 +40,6 @@
         <a href="?page={{ p }}" style="text-decoration:None">{{ page_number }}</a>
     {% endfor %}
 </div>
+
 
 {% endblock food-content %}

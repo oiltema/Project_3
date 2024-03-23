@@ -1,18 +1,15 @@
 from django.shortcuts import render, redirect
+from django.db.models import Count
 
-from .models import Food
-from taggit.models import Tag
-
-
-def get_all_tags(request):
-    tag_list = ['Суп', 'Второе', 'Закуска']
-    tags = Tag.objects.all().exclude(name__in=tag_list)
-    tags_main = Tag.objects.filter(name__in=tag_list)
-    return {'tags_main': tags_main, 'tags_all': tags}
+from .models import Food, Category, SubCategory
 
 
-def get_all_foods(request):
-    foods_all = Food.objects.all()
-    if request.method == 'POST':
-        foods_all = Food.objects.all().order_by(request.POST['sort'])
-    return {'foods_all': foods_all}
+def get_all_category(request):
+    category = Category.objects.all()
+    subcategory = SubCategory.objects.all()
+    return {'category': category, 'subcategory': subcategory}
+
+
+def get_popular_foods(request):
+    foods = Food.objects.annotate(like_count=Count('likes')).order_by('-like_count', 'views')[:5]
+    return {'food_popular': foods}

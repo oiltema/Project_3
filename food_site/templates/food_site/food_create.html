@@ -1,0 +1,15 @@
+{% extends 'food_site/food_base.html' %}
+
+{% block food-content %}
+
+<div style="margin:30px">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {{ food_form.as_table }}
+        </table>
+        <input type="submit" value="Добавить">
+    </form>
+</div>
+
+{% endblock food-content %}
