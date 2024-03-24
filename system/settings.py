@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'user',
     'course_valute',
     'food_site',
+    'service',
 
 
 ]

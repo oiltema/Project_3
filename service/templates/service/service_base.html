@@ -1,0 +1,17 @@
+{% extends 'system/base.html' %}
+
+
+{% block content %}
+
+<div style="float:left; display:inline-block; width:25%; margin-top:40px; text-align: center">
+    <h5 style="margin:10px" onclick="location.href='{% url 'service:category_list' %}'">Найти специалиста</h5>
+    <h5 style="margin:10px" >Мои заказы</h5>
+    <h5 style="margin:10px"     onclick="location.href='{% url 'service:performer_create' %}'">Стать исполнителем</h5>
+</div>
+
+{% block service %}
+
+
+{% endblock service %}
+
+{% endblock content %}

@@ -36,6 +36,7 @@ def index(request):
 
 def food_detail(request, food_slug):
     food = get_object_or_404(Food, slug=food_slug)
+    print(food)
     # Счетчик просмотров
     food.views += 1
     food.save()

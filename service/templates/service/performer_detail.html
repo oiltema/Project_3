@@ -1,0 +1,56 @@
+{% extends 'service/service_base.html' %}
+
+
+{% block service %}
+
+<div style="float: left; display:inline-block; width: 50%; margin-top:40px">
+    <div style="float: left; display:inline-block;">
+        <img src="{{ performer.user.profile.image.url }}" width="50%">
+    </div>
+    <div style="display:inline-block;">
+        <h4>{{ performer.user.profile.first_name }} {{ performer.user.profile.last_name }}</h4>
+        <p>{{ performer.city }}<a style="margin-left:30px">В сети: Неизвестно</a></p>
+        <p>Телефон</p>
+        <p>{{ performer.category }}</p>
+    </div>
+    <div style="clear:left; margin:40px; margin-top: 80px;">
+        <p style="font-size:larger">{{ performer.description }}</p>
+
+    </div>
+    <hr>
+    <div>
+        <h4 style="margin-left:10px">Мои работы:</h4>
+    </div>
+    <hr>
+    <div>
+        <h4 style="margin-left:10px">Виды услуг:</h4>
+    </div>
+    <hr>
+    <div>
+        <h4 style="margin-left:10px">Отзывы:</h4>
+        <hr>
+        <div style="margin:10px">
+            <h5>Добавить отзыв:</h5>
+            <form method="post">
+                {% csrf_token %}
+                {{ review_form.as_p }}
+                <input type="submit" value="Добавить">
+            </form>
+        </div>
+        <hr>
+        {% for review in reviews %}
+        <div style="margin: 20px;">
+            <div style="display:inline-block;">
+                <img src="{{ review.user.profile.image.url }}" width="20%">
+            </div>
+            <a style="margin-left:-230px">
+                <a style="text-decoration:None; color:black" href="{% url 'user:profile' review.user.username %}">{{ review.user.username }}</a>
+                | {{ review.date_create }}</a>
+            <p style="margin-left:30px; margin-top:10px">{{ review.text }}</p>
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock service %}

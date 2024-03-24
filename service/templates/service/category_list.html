@@ -1,0 +1,29 @@
+{% extends 'service/service_base.html' %}
+
+
+{% block service %}
+
+{% if get_cat %}
+    <h3 style="margin-left: 450px; margin-top: 20px">{{ get_cat }} в Москве.</h3>
+{% else %}
+    <h3 style="margin-left: 450px; margin-top: 20px">{{ category.first }} в Москве.</h3>
+{% endif %}
+
+<div style="float: left; display:inline-block; width: 35%; margin-top:40px">
+    {% for item in category %}
+        <h4>
+            <a href="{% url 'service:category_list_by_slug' item.slug %}"
+            style="text-decoration:None; color: black;">{{ item.title | linebreaks}}
+            </a>
+        </h4>
+    {% endfor %}
+</div>
+
+<div style="float: left; display:inline-block; width: 40%; margin-top:40px">
+    {% for item in subcategory %}
+        <a style="font-size: larger; text-decoration:None; color: black;" href="{% url 'service:performers_by_category' item.slug %}">{{ item.title | linebreaks }}</a>
+    {% endfor %}
+</div>
+
+
+{% endblock service %}
