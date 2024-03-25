@@ -13,6 +13,7 @@ class MyWorkAddForm(forms.ModelForm):
     class Meta:
         model = MyWork
         fields = ['image', 'title', 'description', 'price']
+        widgets = {'description': forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 
 
 class TypeWorkAddForm(forms.ModelForm):

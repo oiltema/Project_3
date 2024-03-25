@@ -11,6 +11,11 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div style="margin-left:750px">
+            {% if messages %}
+                {% for message in messages %}
+                    <p style="color:red">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
             <p>Имя пользователя: {{ user_form.username }}</p>
             <p>Электронная почта: {{ user_form.email }}</p>
             <p>Имя: {{ profile_form.first_name }}</p>

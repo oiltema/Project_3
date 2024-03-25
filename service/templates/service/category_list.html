@@ -9,7 +9,7 @@
     <h3 style="margin-left: 450px; margin-top: 20px">{{ category.first }} в Москве.</h3>
 {% endif %}
 
-<div style="float: left; display:inline-block; width: 35%; margin-top:40px">
+<div style="float: left; display:inline-block; width: 30%; margin-top:40px; margin-left:30px">
     {% for item in category %}
         <h4>
             <a href="{% url 'service:category_list_by_slug' item.slug %}"

@@ -3,7 +3,12 @@
 
 {% block service %}
 
-<div style="float: left; display:inline-block; width: 50%; margin-top:40px">
+<div style="float: left; display:inline-block; width: 50%; margin-top:100px">
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color:red">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
     <div style="float: left; display:inline-block;">
         <img src="{{ performer.user.profile.image.url }}" width="50%">
     </div>
@@ -11,19 +16,65 @@
         <h4>{{ performer.user.profile.first_name }} {{ performer.user.profile.last_name }}</h4>
         <p>{{ performer.city }}<a style="margin-left:30px">В сети: Неизвестно</a></p>
         <p>Телефон</p>
-        <p>{{ performer.category }}</p>
+        <p><a style="text-decoration:None; color: black;" href="{% url 'service:performers_by_category' performer.category.slug %}">{{ performer.category }}</a></p>
     </div>
     <div style="clear:left; margin:40px; margin-top: 80px;">
         <p style="font-size:larger">{{ performer.description }}</p>
 
     </div>
     <hr>
-    <div>
+    <div style="width:100%">
         <h4 style="margin-left:10px">Мои работы:</h4>
+        {% if request.user.username == performer.user.username %}
+        <hr>
+        <h5>Добавить мою работу:</h5>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ my_works_form.as_p }}
+                <button type="submit" name="my_works_form">Добавить</button>
+            </form>
+        <hr>
+        {% endif %}
+        <div style="margin:30px; display:inline-block;">
+            {% for work in my_works %}
+            <div style="float:left; width:33%; margin:20px">
+                <img src="{{ work.image.url }}" width="250" height="250">
+                <div style="font-size:larger; margin-top:10px">
+                    <p>{{ work.title }}</p>
+                    <p>{{ work.description }}</p>
+                    <p>Цена: {{ work.price }} руб.</p>
+                    {% if request.user.username == work.performer.user.username %}
+                        <button type="button" onclick="location.href='{% url 'service:mywork_delete' work.pk %}'">Удалить</button>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
     <hr>
     <div>
         <h4 style="margin-left:10px">Виды услуг:</h4>
+        {% if request.user.username == performer.user.username %}
+        <hr>
+        <h5>Добавить услугу:</h5>
+            <form method="post">
+                {% csrf_token %}
+                {{ type_works_form.as_p }}
+                <button type="submit" name="type_works_form">Добавить</button>
+            </form>
+        <hr>
+        {% endif %}
+        <div>
+            {% for type in type_works %}
+                <div style="font-size:larger;">
+                    <a style="margin-left:30px">{{ type.title }}</a>
+                    <a style="float:right; margin-right:100px">от {{ type.price }} руб.</a>
+                    {% if request.user.username == type.performer.user.username %}
+                        <button type="button" onclick="location.href='{% url 'service:type_work_delete' type.pk %}'">Удалить</button>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
     </div>
     <hr>
     <div>
@@ -34,7 +85,7 @@
             <form method="post">
                 {% csrf_token %}
                 {{ review_form.as_p }}
-                <input type="submit" value="Добавить">
+                <button type="submit" name="review_form">Добавить</button>
             </form>
         </div>
         <hr>
@@ -47,6 +98,9 @@
                 <a style="text-decoration:None; color:black" href="{% url 'user:profile' review.user.username %}">{{ review.user.username }}</a>
                 | {{ review.date_create }}</a>
             <p style="margin-left:30px; margin-top:10px">{{ review.text }}</p>
+            {% if review.user.username == request.user.username %}
+                <input type="button" value="Удалить" onclick="location.href='{% url 'service:review_delete' review.pk %}'">
+            {% endif %}
         </div>
         <hr>
         {% endfor %}
